@@ -2,13 +2,12 @@
   "name": "data-filtering-tool",
   "version": "1.0.0",
   "description": "A web interface to curate reddit posts, decide what to keep and what to throw away. Uses firebase realtime database.",
-  "main": "index.js",
   "scripts": {
     "start": "concurrently 'npm run watch' 'npm run serve'",
-    "serve": "budo --live --port 8000 --watch-glob 'public/*.{html,css,js}'",
+    "serve": "budo --port 8000 --watch-glob './*.{html,css,js}' --open",
     "watch": "concurrently 'npm run watch-js' 'npm run watch-css'",
-    "watch-js": "nodemon --exec 'npm run build-js' --watch public/js",
-    "watch-css": "nodemon --exec 'npm run build-css' --watch public/styles -e css",
+    "watch-js": "nodemon --watch public/js --exec 'npm run build-js'",
+    "watch-css": "nodemon --watch public/styles -e css --exec 'npm run build-css'",
     "build-js": "babel ./public/js -o ./bundle.js",
     "build-css": "cat ./public/styles/*.css | cleancss -o ./styles.min.css",
     "build": "npm run build-css && npm run build-js",
@@ -17,10 +16,14 @@
     "surge-upload": "surge --project ./dist --domain makingsense.surge.sh"
   },
   "babel": {
-    "presets": ["es2015"],
+    "presets": [
+      "es2015"
+    ],
     "env": {
       "production": {
-        "presets": ["babili"]
+        "presets": [
+          "babili"
+        ]
       }
     }
   },
@@ -29,10 +32,11 @@
     "url": "git+https://github.com/troy-lamerton/data-filtering-tool.git"
   },
   "keywords": [
-    "angular",
     "angularfire",
     "firebase",
-    "tool"
+    "makingsense",
+    "logic",
+    "athene"
   ],
   "author": "Troy Lamerton",
   "license": "MIT",
@@ -40,11 +44,7 @@
     "url": "https://github.com/troy-lamerton/data-filtering-tool/issues"
   },
   "homepage": "https://github.com/troy-lamerton/data-filtering-tool#readme",
-  "dependencies": {
-    "lodash": "^4.17.4",
-    "moment": "^2.17.1",
-    "redwrap": "0.0.4"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-plugin-uglify": "^1.0.2",
