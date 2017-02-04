@@ -5,13 +5,24 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently 'npm run watch' 'npm run serve'",
-    "serve": "budo --live --watch-glob '**/*.{html,css,js}'",
+    "serve": "budo --live --port 8000 --watch-glob 'public/*.{html,css,js}'",
     "watch": "concurrently 'npm run watch-js' 'npm run watch-css'",
     "watch-js": "nodemon --exec 'npm run build-js' --watch public/js",
     "watch-css": "nodemon --exec 'npm run build-css' --watch public/styles -e css",
-    "build-js": "babel ./public/js --presets babel-preset-es2015 -o ./public/dist/bundle.js && uglifyjs ./public/dist/bundle.js -o ./public/dist/bundle.js --source-map ./public/dist/bundle.map --source-map-url bundle.map",
-    "build-css": "cat ./public/styles/loader.css ./public/styles/template.css ./public/styles/index.css | cleancss -o ./public/dist/styles/styles.min.css",
-    "build": "concurrently 'npm run build-css' 'npm run build-js'"
+    "build-js": "babel ./public/js -o ./bundle.js",
+    "build-css": "cat ./public/styles/*.css | cleancss -o ./styles.min.css",
+    "build": "npm run build-css && npm run build-js",
+    "predeploy": "rm -rf ./dist && mkdir dist && cp index.html ./dist && cp bundle.js ./dist && cp styles.min.css ./dist",
+    "deploy": "BABEL_ENV=production NODE_ENV=production npm run build && cp index.html ./dist && npm run surge-upload",
+    "surge-upload": "surge --project ./dist --domain makingsense.surge.sh"
+  },
+  "babel": {
+    "presets": ["es2015"],
+    "env": {
+      "production": {
+        "presets": ["babili"]
+      }
+    }
   },
   "repository": {
     "type": "git",
@@ -38,6 +49,7 @@
     "babel-cli": "^6.18.0",
     "babel-plugin-uglify": "^1.0.2",
     "babel-preset-es2015": "^6.18.0",
+    "babili": "0.0.10",
     "clean-css": "^3.4.23",
     "concurrently": "^3.1.0"
   }

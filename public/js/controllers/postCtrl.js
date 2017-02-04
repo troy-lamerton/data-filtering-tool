@@ -3,7 +3,7 @@
 
 /**
  * The main controller for the app. The controller:
- * - retrieves and persists the model via the $firebaseObject service
+ * - retrieves and persists the model via the $firebaseArray service
  * - exposes the model to the template and provides event handlers
  */
 postchooser.controller('PostCtrl', function PostCtrl(
