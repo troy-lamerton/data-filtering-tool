@@ -3,7 +3,7 @@
 A web interface for selecting and displaying Reddit posts from your favourite subreddit.
 This project is setup to keep track of posts on the [r/MakingSense](https://www.reddit.com/r/makingsense) subreddit.
 
-You can [see it in action here](http://troy-lamerton.github.io/data-filtering-tool/)
+You can [see it in action here](https://makingsense.surge.sh)
 
 ### Running on your machine
 ~~~~
